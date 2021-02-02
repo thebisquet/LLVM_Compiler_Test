@@ -12,28 +12,29 @@
 //===-------------------------------===//
 #pragma region Lexer
 
-// The lexer returns tokens [0-255] if it is an unknown character, otherwise one
-// of these for known things.
+// The lexer returns tokens [0-255] if it is an unknown character, otherwise one of these for known things.
 enum Token {
+    // End of File
     tok_eof = -1,
 
-    // commands
+    // Commands
     tok_def = -2,
     tok_extern = -3,
 
-    // primary
+    // Primary Tokens
     tok_identifier = -4,
     tok_number = -5
 };
 
+// Global Variables for storing token returns.
 static std::string IdentifierStr; // Filled in if tok_identifier
 static double NumVal;             // Filled in if tok_number
 
-/// gettok - Return the next token from standard input.
+// Return the next token from standard input.
 static int gettok() {
     static int LastChar = ' ';
 
-    // Skip any whitespace.
+    // Skip whitespace.
     while (isspace(LastChar))
         LastChar = getchar();
 
@@ -60,8 +61,7 @@ static int gettok() {
         return tok_number;
     }
 
-    if (LastChar == '#') {
-        // Comment until end of line.
+    if (LastChar == '#') { // Comment until end of line.
         do
             LastChar = getchar();
         while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
@@ -170,8 +170,7 @@ namespace {
 static int CurTok;
 static int getNextToken() { return CurTok = gettok(); }
 
-/// BinopPrecedence - This holds the precedence for each binary operator that is
-/// defined.
+/// BinopPrecedence - This holds the precedence for each binary operator that is defined.
 static std::map<char, int> BinopPrecedence;
 
 /// GetTokPrecedence - Get the precedence of the pending binary operator token.
@@ -439,12 +438,11 @@ static void MainLoop() {
 #pragma region Main Driver Code
 
 int main() {
-    // Install standard binary operators.
-    // 1 is lowest precedence.
+    // Install standard binary operators. 1 is lowest precedence.
     BinopPrecedence['<'] = 10;
     BinopPrecedence['+'] = 20;
     BinopPrecedence['-'] = 20;
-    BinopPrecedence['*'] = 40; // highest.
+    BinopPrecedence['*'] = 40;
 
     // Prime the first token.
     fprintf(stderr, "ready> ");
