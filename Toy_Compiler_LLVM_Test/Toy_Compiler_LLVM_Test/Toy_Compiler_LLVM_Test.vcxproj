@@ -139,8 +139,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Toy_Lexer.cpp" />
     <ClCompile Include="Toy_Compiler_LLVM_Test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C_ExpressionAST.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
